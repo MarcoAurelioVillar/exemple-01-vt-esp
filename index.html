@@ -38,10 +38,10 @@
   <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
     <aside style="width: 250px; flex-shrink: 0; background: #211913; color: #efe6d8; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding: 22px 16px;">
       <div style="display: flex; align-items: center; gap: 12px; padding: 0 8px 22px;">
-        <div style="width: 42px; height: 42px; border-radius: 12px; background: #cf5a2b; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; color: #fff;">V</div>
+        <div style="width: 42px; height: 42px; border-radius: 12px; background: #cf5a2b; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; color: #fff;">Q</div>
         <div>
-          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; line-height: 1.05; color: #fff;">Espetaria do Vitor</div>
-          <div style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #9a8b76; margin-top: 2px;">Gestão do salão</div>
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; line-height: 1.05; color: #fff;">Quintal Burguer</div>
+          <div style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #9a8b76; margin-top: 2px;">Hambúrguer artesanal</div>
         </div>
       </div>
 
@@ -96,9 +96,9 @@
     <sc-if value="{{ isMobile }}">
       <header style="height: 56px; flex-shrink: 0; background: rgba(247,243,236,0.92); backdrop-filter: blur(6px); border-bottom: 1px solid #ece3d6; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; position: sticky; top: 0; z-index: 20;">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <div style="width: 32px; height: 32px; border-radius: 9px; background: #cf5a2b; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 17px; color: #fff;">V</div>
+          <div style="width: 32px; height: 32px; border-radius: 9px; background: #cf5a2b; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 17px; color: #fff;">Q</div>
           <div style="line-height: 1.1;">
-            <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; color: #2a211a;">Espetaria do Vitor</div>
+            <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; color: #2a211a;">Quintal Burguer</div>
             <div style="font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: #9a8b76;">{{ crumb }}</div>
           </div>
         </div>
@@ -235,7 +235,7 @@
               </label>
               <label style="{{ fLabelStyle }}">
                 <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Produto</span>
-                <select value="{{ fProduto }}" onChange="{{ setFProduto }}" style="height: 40px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a; cursor: pointer;"><option value="todos">Todos</option><option value="Espetos">Espetos</option><option value="Bebidas">Bebidas</option><option value="Porções">Porções</option><option value="Outros">Outros</option></select>
+                <select value="{{ fProduto }}" onChange="{{ setFProduto }}" style="height: 40px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a; cursor: pointer;"><option value="todos">Todos</option><option value="Burgers">Burgers</option><option value="Pastéis">Pastéis</option><option value="Porções">Porções</option><option value="Bebidas">Bebidas</option><option value="Sobremesas">Sobremesas</option></select>
               </label>
               <label style="{{ fLabelStyle }}">
                 <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Mesa</span>
@@ -337,7 +337,7 @@
                 <div style="display: flex; flex-direction: column; gap: 14px;">
                   <label style="display: flex; flex-direction: column; gap: 6px;">
                     <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Descrição</span>
-                    <input value="{{ gDesc }}" onChange="{{ setGDesc }}" placeholder="Carne &middot; Açougue Boi Bom" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a;" style-focus="border-color: #cf5a2b;" />
+                    <input value="{{ gDesc }}" onChange="{{ setGDesc }}" placeholder="Blend 180g &middot; Açougue Boi Bom" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a;" style-focus="border-color: #cf5a2b;" />
                   </label>
                   <div style="display: flex; gap: 12px;">
                     <label style="display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0;">
@@ -474,12 +474,12 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;breakpoint&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 760, &quot;min&quot;: 600, &quot;max&quot;: 1000, &quot;step&quot;: 10, &quot;unit&quot;: &quot;px&quot;, &quot;section&quot;: &quot;Layout&quot;}}">
-const STORE_KEY = 'espetaria_vitor_prod_v1';
+const STORE_KEY = 'quintal_burguer_prod_v1';
 
 class Component extends DCLogic {
   state = {
     tab: 'pedido',
-    cat: 'espetos',
+    cat: 'burgers',
     busca: '',
     mesa: 'Mesa 07',
     garcom: 'Marco',
@@ -497,61 +497,75 @@ class Component extends DCLogic {
   };
 
   menu = {
-    espetos: [
-      { name: 'Espeto de Carne', price: 14 },
-      { name: 'Espeto Coquetel', price: 9 },
-      { name: 'Espeto de Frango', price: 12 },
-      { name: 'Espeto de Queijo', price: 10 },
-      { name: 'Espeto Lingui\u00e7a', price: 11 },
-      { name: 'Medalh\u00e3o de Carne', price: 16 },
+    burgers: [
+      { name: 'X-Burger', price: 26 },
+      { name: 'X-Salada', price: 28 },
+      { name: 'X-Bacon', price: 30 },
+      { name: 'X-Salada Bacon', price: 32 },
+      { name: 'Adocicado', price: 29 },
+      { name: 'Smash Duplo', price: 32 },
+      { name: 'Smash Kids', price: 17 },
+      { name: 'Quintal', price: 42 },
     ],
-    bebidas: [
-      { name: 'Cerveja 600ml', price: 19 },
-      { name: 'Cerveja Long Neck', price: 9 },
-      { name: 'Refrigerante 350ml', price: 8 },
-      { name: '\u00c1gua Mineral', price: 5 },
-      { name: 'Suco Natural', price: 12 },
-      { name: 'Caipirinha', price: 18 },
+    pasteis: [
+      { name: 'Pastel de Carne', price: 14 },
+      { name: 'Pastel Carne c/ Queijo', price: 15 },
+      { name: 'Pastel Frango c/ Catupiry', price: 15 },
+      { name: 'Pastel Queijo c/ Bacon', price: 15 },
+      { name: 'Pastel de Pizza', price: 15 },
+      { name: 'Pastel de Chocolate', price: 15 },
     ],
     porcoes: [
-      { name: 'Por\u00e7\u00e3o Mandioca', price: 28 },
-      { name: 'Por\u00e7\u00e3o Pastel', price: 32 },
-      { name: 'Frango \u00e0 Passarinho', price: 38 },
-      { name: 'Batata Frita', price: 26 },
+      { name: 'Batata Frita', price: 30 },
+      { name: 'Batata Cheddar e Bacon', price: 37 },
+      { name: 'Coxinha de Frango (16un)', price: 32 },
+      { name: 'Bolinha de Queijo (20un)', price: 28 },
+      { name: 'Anel de Cebola', price: 28 },
+      { name: 'Por\u00e7\u00e3o Tripla', price: 38 },
     ],
-    outros: [
-      { name: 'P\u00e3o de Alho', price: 10 },
-      { name: 'Vinagrete', price: 6 },
-      { name: 'Couvert', price: 8 },
+    bebidas: [
+      { name: 'Chopp 350ml', price: 11 },
+      { name: 'Chopp 550ml', price: 13 },
+      { name: 'Coca-Cola Lata 350ml', price: 6 },
+      { name: 'Coca-Cola 600ml', price: 7 },
+      { name: 'Suco Natural 500ml', price: 8 },
+      { name: 'Heineken Long Neck', price: 9 },
+      { name: '\u00c1gua Mineral 500ml', price: 4 },
+      { name: 'Red Bull', price: 13 },
+    ],
+    sobremesas: [
+      { name: 'Mini Churros (20un)', price: 21 },
+      { name: 'Milk Shake 300ml', price: 17 },
+      { name: 'Pastel Romeu e Julieta', price: 15 },
     ],
   };
 
-  catKeyLabel = { espetos: 'Espetos', bebidas: 'Bebidas', porcoes: 'Por\u00e7\u00f5es', outros: 'Outros' };
-  catLabelKey = { 'Espetos': 'espetos', 'Bebidas': 'bebidas', 'Por\u00e7\u00f5es': 'porcoes', 'Outros': 'outros' };
+  catKeyLabel = { burgers: 'Burgers', pasteis: 'Past\u00e9is', porcoes: 'Por\u00e7\u00f5es', bebidas: 'Bebidas', sobremesas: 'Sobremesas' };
+  catLabelKey = { 'Burgers': 'burgers', 'Past\u00e9is': 'pasteis', 'Por\u00e7\u00f5es': 'porcoes', 'Bebidas': 'bebidas', 'Sobremesas': 'sobremesas' };
 
   seedSaidas() {
     return [
-      { hora: '21:02', data: '15/06', item: 'Cerveja 600ml', cat: 'Bebidas', mesa: 'Mesa 07', destino: 'Bar', qtd: 2, valor: 38 },
-      { hora: '20:48', data: '15/06', item: 'Por\u00e7\u00e3o Mandioca', cat: 'Por\u00e7\u00f5es', mesa: 'Mesa 04', destino: 'Cozinha', qtd: 1, valor: 28 },
-      { hora: '20:33', data: '15/06', item: 'Espeto Coquetel', cat: 'Espetos', mesa: 'Balc\u00e3o', destino: 'Cozinha', qtd: 6, valor: 54 },
-      { hora: '20:21', data: '15/06', item: 'Cerveja Long Neck', cat: 'Bebidas', mesa: 'Mesa 12', destino: 'Bar', qtd: 4, valor: 36 },
-      { hora: '20:14', data: '15/06', item: 'Espeto de Carne', cat: 'Espetos', mesa: 'Mesa 07', destino: 'Cozinha', qtd: 3, valor: 42 },
-      { hora: '19:58', data: '15/06', item: 'Refrigerante 350ml', cat: 'Bebidas', mesa: 'Mesa 08', destino: 'Bar', qtd: 2, valor: 16 },
-      { hora: '19:30', data: '15/06', item: 'Por\u00e7\u00e3o Pastel', cat: 'Por\u00e7\u00f5es', mesa: 'Mesa 12', destino: 'Cozinha', qtd: 1, valor: 32 },
+      { hora: '21:02', data: '15/06', item: 'Chopp 350ml', cat: 'Bebidas', mesa: 'Mesa 07', destino: 'Bar', qtd: 2, valor: 22 },
+      { hora: '20:48', data: '15/06', item: 'X-Bacon', cat: 'Burgers', mesa: 'Mesa 04', destino: 'Cozinha', qtd: 1, valor: 30 },
+      { hora: '20:33', data: '15/06', item: 'Smash Duplo', cat: 'Burgers', mesa: 'Balc\u00e3o', destino: 'Cozinha', qtd: 2, valor: 64 },
+      { hora: '20:21', data: '15/06', item: 'Heineken Long Neck', cat: 'Bebidas', mesa: 'Mesa 12', destino: 'Bar', qtd: 4, valor: 36 },
+      { hora: '20:14', data: '15/06', item: 'Pastel Carne c/ Queijo', cat: 'Past\u00e9is', mesa: 'Mesa 07', destino: 'Cozinha', qtd: 3, valor: 45 },
+      { hora: '19:58', data: '15/06', item: 'Batata Frita', cat: 'Por\u00e7\u00f5es', mesa: 'Mesa 08', destino: 'Cozinha', qtd: 1, valor: 30 },
+      { hora: '19:30', data: '15/06', item: 'Milk Shake 300ml', cat: 'Sobremesas', mesa: 'Mesa 12', destino: 'Cozinha', qtd: 1, valor: 17 },
     ];
   }
   seedGastos() {
     return [
-      { data: '14/06', desc: 'Carne \u00b7 A\u00e7ougue Boi Bom', cat: 'Insumos', valor: 1240 },
-      { data: '13/06', desc: 'Frango e lingui\u00e7a', cat: 'Insumos', valor: 980 },
+      { data: '14/06', desc: 'Blend 180g \u00b7 A\u00e7ougue Boi Bom', cat: 'Insumos', valor: 1240 },
+      { data: '13/06', desc: 'P\u00e3o de brioche \u00b7 Padaria', cat: 'Insumos', valor: 980 },
       { data: '12/06', desc: 'Engradados de cerveja', cat: 'Bebidas', valor: 1860 },
       { data: '12/06', desc: 'Destilados e gelo', cat: 'Bebidas', valor: 980 },
       { data: '11/06', desc: 'Refrigerantes e \u00e1gua', cat: 'Bebidas', valor: 720 },
       { data: '11/06', desc: 'Funcion\u00e1rio extra (di\u00e1ria)', cat: 'Fixos', valor: 900 },
       { data: '10/06', desc: 'Aluguel do ponto', cat: 'Fixos', valor: 3200 },
       { data: '09/06', desc: 'Sal\u00e1rios \u00b7 equipe', cat: 'Fixos', valor: 6800 },
-      { data: '09/06', desc: 'Temperos e \u00f3leo', cat: 'Insumos', valor: 1100 },
-      { data: '08/06', desc: 'Carv\u00e3o \u00b7 20 sacos', cat: 'Insumos', valor: 540 },
+      { data: '09/06', desc: 'Queijos e bacon', cat: 'Insumos', valor: 1100 },
+      { data: '08/06', desc: '\u00d3leo p/ fritura \u00b7 batata e past\u00e9is', cat: 'Insumos', valor: 540 },
       { data: '07/06', desc: 'Hortifr\u00fati', cat: 'Insumos', valor: 430 },
       { data: '06/06', desc: 'G\u00e1s \u00b7 2 botij\u00f5es', cat: 'Insumos', valor: 520 },
       { data: '05/06', desc: 'Energia el\u00e9trica', cat: 'Fixos', valor: 760 },
@@ -693,7 +707,7 @@ class Component extends DCLogic {
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'saidas-espetaria-do-vitor.csv';
+      a.href = url; a.download = 'saidas-quintal-burguer.csv';
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1500);
     } catch (e) {}
@@ -752,7 +766,7 @@ class Component extends DCLogic {
     }));
     const crumbMap = { pedido: 'Pedido', saidas: 'Sa\u00eddas', gastos: 'Gastos', relatorio: 'Relat\u00f3rio' };
 
-    const catList = ['espetos', 'bebidas', 'porcoes', 'outros'].map((k) => ({
+    const catList = ['burgers', 'pasteis', 'porcoes', 'bebidas', 'sobremesas'].map((k) => ({
       label: this.catKeyLabel[k], style: this.pillStyle(k === s.cat), onClick: () => this.setCat(k),
     }));
     const q = (s.busca || '').toLowerCase().trim();
@@ -790,9 +804,9 @@ class Component extends DCLogic {
 
     // relatório
     const allSaidas = s.saidas || [];
-    const VENDA_BASE = { 'Espetos': 16200, 'Bebidas': 12400, 'Por\u00e7\u00f5es': 7800, 'Outros': 1720 };
+    const VENDA_BASE = { 'Burgers': 18400, 'Past\u00e9is': 6200, 'Por\u00e7\u00f5es': 8900, 'Bebidas': 11300, 'Sobremesas': 2100 };
     const vendaCatSum = (catLabel) => (VENDA_BASE[catLabel] || 0) + allSaidas.filter((r) => r.cat === catLabel).reduce((a, r) => a + r.valor, 0);
-    const vCatVals = ['Espetos', 'Bebidas', 'Por\u00e7\u00f5es', 'Outros'].map((c) => ({ label: c, valor: vendaCatSum(c) }));
+    const vCatVals = ['Burgers', 'Past\u00e9is', 'Por\u00e7\u00f5es', 'Bebidas', 'Sobremesas'].map((c) => ({ label: c, valor: vendaCatSum(c) }));
     const vendido = vCatVals.reduce((a, c) => a + c.valor, 0);
     const gasto = gastosTotalAll;
     const resultado = vendido - gasto;
