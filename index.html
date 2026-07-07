@@ -22,8 +22,11 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+    a { color: #cf5a2b; }
+    a:hover { color: #b54a1f; }
     ::selection { background: #cf5a2b; color: #fff; }
     select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='none' stroke='%238c8073' stroke-width='1.6' d='M1 1l5 5 5-5'/></svg>"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px !important; }
+    @media (max-width: 760px) { input, select { font-size: 16px !important; } }
     @keyframes wfToast { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes wfPop { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
   </style>
@@ -31,62 +34,83 @@
 
 <div style="display: flex; min-height: 100vh;">
 
-  <!-- ============ SIDEBAR ============ -->
-  <aside style="width: 250px; flex-shrink: 0; background: #211913; color: #efe6d8; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding: 22px 16px;">
-    <div style="display: flex; align-items: center; gap: 12px; padding: 0 8px 22px;">
-      <div style="width: 42px; height: 42px; border-radius: 12px; background: #cf5a2b; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; color: #fff;">V</div>
-      <div>
-        <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; line-height: 1.05; color: #fff;">Espetaria do Vitor</div>
-        <div style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #9a8b76; margin-top: 2px;">Gest&atilde;o do sal&atilde;o</div>
-      </div>
-    </div>
-
-    <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 8px 12px 6px;">Opera&ccedil;&atilde;o</div>
-    <sc-for list="{{ navOp }}" as="n" hint-placeholder-count="2">
-      <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="background: rgba(255,255,255,0.06);">
-        <span style="width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.85;"></span>
-        {{ n.label }}
-      </button>
-    </sc-for>
-
-    <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 16px 12px 6px;">Financeiro</div>
-    <sc-for list="{{ navFin }}" as="n" hint-placeholder-count="2">
-      <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="background: rgba(255,255,255,0.06);">
-        <span style="width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.85;"></span>
-        {{ n.label }}
-      </button>
-    </sc-for>
-
-    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);">
-      <div style="display: flex; align-items: center; gap: 11px; padding: 6px 8px;">
-        <div style="width: 34px; height: 34px; border-radius: 50%; background: #3a2c1e; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #efe6d8; font-size: 14px;">M</div>
-        <div style="line-height: 1.15;">
-          <div style="font-weight: 600; font-size: 13px; color: #efe6d8;">Marco</div>
-          <div style="font-size: 11px; color: #9a8b76;">Turno &middot; noite</div>
+  <!-- ============ SIDEBAR (desktop) ============ -->
+  <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+    <aside style="width: 250px; flex-shrink: 0; background: #211913; color: #efe6d8; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding: 22px 16px;">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 0 8px 22px;">
+        <div style="width: 42px; height: 42px; border-radius: 12px; background: #cf5a2b; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; color: #fff;">V</div>
+        <div>
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; line-height: 1.05; color: #fff;">Espetaria do Vitor</div>
+          <div style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #9a8b76; margin-top: 2px;">Gestão do salão</div>
         </div>
       </div>
-      <button onClick="{{ resetDemo }}" style="margin-top: 6px; width: 100%; background: transparent; border: 0; cursor: pointer; text-align: left; padding: 7px 8px; font-size: 12px; color: #6f6151; font-family: inherit;" style-hover="color: #cf5a2b;">&#8634; Reiniciar demo</button>
-    </div>
-  </aside>
+
+      <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 8px 12px 6px;">Operação</div>
+      <sc-for list="{{ navOp }}" as="n" hint-placeholder-count="2">
+        <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="background: rgba(255,255,255,0.06);">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.85;"></span>
+          {{ n.label }}
+        </button>
+      </sc-for>
+
+      <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 16px 12px 6px;">Financeiro</div>
+      <sc-for list="{{ navFin }}" as="n" hint-placeholder-count="2">
+        <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="background: rgba(255,255,255,0.06);">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.85;"></span>
+          {{ n.label }}
+        </button>
+      </sc-for>
+
+      <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);">
+        <div style="display: flex; align-items: center; gap: 11px; padding: 6px 8px;">
+          <div style="width: 34px; height: 34px; border-radius: 50%; background: #3a2c1e; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #efe6d8; font-size: 14px;">M</div>
+          <div style="line-height: 1.15;">
+            <div style="font-weight: 600; font-size: 13px; color: #efe6d8;">Marco</div>
+            <div style="font-size: 11px; color: #9a8b76;">Turno &middot; noite</div>
+          </div>
+        </div>
+        <button onClick="{{ resetDemo }}" style="margin-top: 6px; width: 100%; background: transparent; border: 0; cursor: pointer; text-align: left; padding: 7px 8px; font-size: 12px; color: #6f6151; font-family: inherit;" style-hover="color: #cf5a2b;">&#8634; Reiniciar demo</button>
+      </div>
+    </aside>
+  </sc-if>
 
   <!-- ============ MAIN ============ -->
   <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
 
-    <!-- topbar -->
-    <header style="height: 64px; flex-shrink: 0; background: rgba(247,243,236,0.85); backdrop-filter: blur(6px); border-bottom: 1px solid #ece3d6; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 20;">
-      <div style="display: flex; align-items: center; gap: 9px; font-size: 14px; color: #8c8073;">
-        <span>Sal&atilde;o</span>
-        <span style="color: #cdbfae;">/</span>
-        <span style="color: #2a211a; font-weight: 600;">{{ crumb }}</span>
-      </div>
-      <div style="display: flex; align-items: center; gap: 16px;">
-        <div style="font-size: 13px; color: #8c8073;"><span style="color: #2a211a; font-weight: 600;">15 Jun 2026</span> &middot; Dom &middot; <span style="font-family: 'IBM Plex Mono', monospace;">{{ clock }}</span></div>
-        <button onClick="{{ toPedido }}" style="height: 40px; padding: 0 18px; border: 0; border-radius: 10px; background: #cf5a2b; color: #fff; font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" style-hover="background: #b54a1f;">+ Novo pedido</button>
-      </div>
-    </header>
+    <!-- topbar desktop -->
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <header style="height: 64px; flex-shrink: 0; background: rgba(247,243,236,0.85); backdrop-filter: blur(6px); border-bottom: 1px solid #ece3d6; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 20;">
+        <div style="display: flex; align-items: center; gap: 9px; font-size: 14px; color: #8c8073;">
+          <span>Salão</span>
+          <span style="color: #cdbfae;">/</span>
+          <span style="color: #2a211a; font-weight: 600;">{{ crumb }}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-size: 13px; color: #8c8073;"><span style="color: #2a211a; font-weight: 600;">15 Jun 2026</span> &middot; Dom &middot; <span style="font-family: 'IBM Plex Mono', monospace;">{{ clock }}</span></div>
+          <button onClick="{{ toPedido }}" style="height: 40px; padding: 0 18px; border: 0; border-radius: 10px; background: #cf5a2b; color: #fff; font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" style-hover="background: #b54a1f;">+ Novo pedido</button>
+        </div>
+      </header>
+    </sc-if>
+
+    <!-- topbar mobile -->
+    <sc-if value="{{ isMobile }}">
+      <header style="height: 56px; flex-shrink: 0; background: rgba(247,243,236,0.92); backdrop-filter: blur(6px); border-bottom: 1px solid #ece3d6; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; position: sticky; top: 0; z-index: 20;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 32px; height: 32px; border-radius: 9px; background: #cf5a2b; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 17px; color: #fff;">V</div>
+          <div style="line-height: 1.1;">
+            <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; color: #2a211a;">Espetaria do Vitor</div>
+            <div style="font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: #9a8b76;">{{ crumb }}</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: #2a211a; color: #f7f3ec; padding: 4px 9px; border-radius: 7px;">{{ clock }}</span>
+          <button onClick="{{ resetDemo }}" style="width: 34px; height: 34px; border-radius: 9px; border: 1px solid #d9cdbd; background: #fff; cursor: pointer; color: #8c8073; font-size: 16px; display: flex; align-items: center; justify-content: center;" style-hover="color: #cf5a2b; border-color: #cf5a2b;">&#8634;</button>
+        </div>
+      </header>
+    </sc-if>
 
     <main style="flex: 1; overflow: visible;">
-      <div style="max-width: 1200px; margin: 0 auto; padding: 32px;">
+      <div style="{{ contentStyle }}">
 
         <!-- ============================================================
              PEDIDO
@@ -94,32 +118,32 @@
         <sc-if value="{{ isPedido }}" hint-placeholder-val="{{ true }}">
           <div data-screen-label="Pedido">
             <div style="margin-bottom: 24px;">
-              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px; letter-spacing: -0.5px; margin: 0;">Registrar pedido</h1>
-              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px;">Monte a ficha pelo card&aacute;pio e imprima &mdash; cada item vira uma saída no livro.</p>
+              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 5.5vw, 30px); letter-spacing: -0.5px; margin: 0;">Registrar pedido</h1>
+              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px; text-wrap: pretty;">Monte a ficha pelo cardápio e imprima &mdash; cada item vira uma saída no livro.</p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px;">
+            <div style="{{ formGridStyle }}">
               <label style="display: flex; flex-direction: column; gap: 6px;">
                 <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Mesa</span>
-                <select value="{{ mesa }}" onChange="{{ setMesa }}" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a; cursor: pointer;" style-focus="border-color: #cf5a2b;"><option>Mesa 07</option><option>Mesa 01</option><option>Mesa 04</option><option>Mesa 08</option><option>Mesa 12</option><option>Balc&atilde;o</option><option>Viagem</option></select>
+                <select value="{{ mesa }}" onChange="{{ setMesa }}" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a; cursor: pointer;" style-focus="border-color: #cf5a2b;"><option>Mesa 07</option><option>Mesa 01</option><option>Mesa 04</option><option>Mesa 08</option><option>Mesa 12</option><option>Balcão</option><option>Viagem</option></select>
               </label>
               <label style="display: flex; flex-direction: column; gap: 6px;">
-                <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Gar&ccedil;om</span>
-                <select value="{{ garcom }}" onChange="{{ setGarcom }}" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a; cursor: pointer;" style-focus="border-color: #cf5a2b;"><option>Marco</option><option>J&uacute;lia</option><option>Renan</option></select>
+                <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Garçom</span>
+                <select value="{{ garcom }}" onChange="{{ setGarcom }}" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a; cursor: pointer;" style-focus="border-color: #cf5a2b;"><option>Marco</option><option>Júlia</option><option>Renan</option></select>
               </label>
-              <label style="display: flex; flex-direction: column; gap: 6px;">
-                <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Observa&ccedil;&atilde;o</span>
+              <label style="{{ obsLabelStyle }}">
+                <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Observação</span>
                 <input value="{{ obs }}" onChange="{{ setObs }}" placeholder="sem cebola, ponto da carne..." style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a;" style-focus="border-color: #cf5a2b;" />
               </label>
             </div>
 
-            <div style="display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr); gap: 22px; align-items: start;">
+            <div style="{{ pedidoGridStyle }}">
 
               <!-- cardápio -->
-              <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 22px;">
+              <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 18px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
-                  <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; margin: 0;">Card&aacute;pio</h2>
-                  <input value="{{ busca }}" onChange="{{ setBusca }}" placeholder="Buscar item..." style="height: 38px; width: 200px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a;" style-focus="border-color: #cf5a2b; background: #fff;" />
+                  <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; margin: 0;">Cardápio</h2>
+                  <input value="{{ busca }}" onChange="{{ setBusca }}" placeholder="Buscar item..." style="{{ buscaStyle }}" style-focus="border-color: #cf5a2b; background: #fff;" />
                 </div>
 
                 <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px;">
@@ -128,7 +152,7 @@
                   </sc-for>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 12px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 12px;">
                   <sc-for list="{{ menuItems }}" as="item" hint-placeholder-count="6">
                     <button onClick="{{ item.onClick }}" style="text-align: left; cursor: pointer; color: #2a211a; background: #faf7f2; border: 1px solid #ece3d6; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 12px; min-height: 92px;" style-hover="border-color: #cf5a2b; background: #fff; box-shadow: 0 3px 10px rgba(42,33,26,0.06);">
                       <span style="font-weight: 600; font-size: 15px; line-height: 1.25;">{{ item.name }}</span>
@@ -145,23 +169,23 @@
               </div>
 
               <!-- ficha -->
-              <div style="position: sticky; top: 88px;">
+              <div style="{{ fichaWrapStyle }}">
                 <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; min-height: 380px; box-shadow: 0 8px 28px rgba(42,33,26,0.07);">
                   <div style="display: flex; align-items: center; justify-content: space-between;">
                     <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.5px; color: #8c8073;">FICHA #{{ fichaNum }}</span>
                     <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: #2a211a; color: #f7f3ec; padding: 3px 9px; border-radius: 7px;">{{ clock }}</span>
                   </div>
                   <h3 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; margin: 10px 0 2px;">{{ mesa }}</h3>
-                  <div style="font-size: 13px; color: #8c8073; margin-bottom: 14px;">Gar&ccedil;om &middot; {{ garcom }} &middot; turno noite</div>
+                  <div style="font-size: 13px; color: #8c8073; margin-bottom: 14px;">Garçom &middot; {{ garcom }} &middot; turno noite</div>
 
                   <div style="border-top: 1px dashed #ddd2c2; padding-top: 4px; flex: 1;">
                     <sc-if value="{{ hasFicha }}">
                       <sc-for list="{{ ficha }}" as="l" hint-placeholder-count="0">
                         <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid #f1ebe1;">
                           <span style="display: inline-flex; align-items: center; gap: 6px;">
-                            <button onClick="{{ l.onDec }}" style="width: 24px; height: 24px; border-radius: 7px; border: 1px solid #d9cdbd; background: #fff; cursor: pointer; color: #2a211a; font-size: 15px; line-height: 1;" style-hover="border-color: #cf5a2b; color: #cf5a2b;">&minus;</button>
+                            <button onClick="{{ l.onDec }}" style="width: 28px; height: 28px; border-radius: 7px; border: 1px solid #d9cdbd; background: #fff; cursor: pointer; color: #2a211a; font-size: 15px; line-height: 1;" style-hover="border-color: #cf5a2b; color: #cf5a2b;">&minus;</button>
                             <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 14px; min-width: 18px; text-align: center;">{{ l.qty }}</span>
-                            <button onClick="{{ l.onInc }}" style="width: 24px; height: 24px; border-radius: 7px; border: 1px solid #d9cdbd; background: #fff; cursor: pointer; color: #2a211a; font-size: 15px; line-height: 1;" style-hover="border-color: #cf5a2b; color: #cf5a2b;">+</button>
+                            <button onClick="{{ l.onInc }}" style="width: 28px; height: 28px; border-radius: 7px; border: 1px solid #d9cdbd; background: #fff; cursor: pointer; color: #2a211a; font-size: 15px; line-height: 1;" style-hover="border-color: #cf5a2b; color: #cf5a2b;">+</button>
                           </span>
                           <span>
                             <span style="display: block; font-weight: 500; font-size: 14px;">{{ l.name }}</span>
@@ -172,7 +196,7 @@
                       </sc-for>
                     </sc-if>
                     <sc-if value="{{ noFicha }}" hint-placeholder-val="{{ true }}">
-                      <div style="border: 1px dashed #ddd2c2; border-radius: 12px; padding: 32px 18px; text-align: center; color: #b6ab9c; font-size: 14px; margin-top: 10px;">Ficha vazia<br /><span style="font-size: 13px;">toque nos itens do card&aacute;pio</span></div>
+                      <div style="border: 1px dashed #ddd2c2; border-radius: 12px; padding: 32px 18px; text-align: center; color: #b6ab9c; font-size: 14px; margin-top: 10px;">Ficha vazia<br /><span style="font-size: 13px;">toque nos itens do cardápio</span></div>
                     </sc-if>
                   </div>
 
@@ -198,60 +222,91 @@
           <div data-screen-label="Saídas">
             <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap;">
               <div>
-                <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px; letter-spacing: -0.5px; margin: 0;">Controle de saídas</h1>
-                <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px;">Toda ficha impressa entra aqui. Filtre por produto, mesa ou período.</p>
+                <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 5.5vw, 30px); letter-spacing: -0.5px; margin: 0;">Controle de saídas</h1>
+                <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px; text-wrap: pretty;">Toda ficha impressa entra aqui. Filtre por produto, mesa ou período.</p>
               </div>
               <button onClick="{{ exportCSV }}" style="height: 42px; padding: 0 18px; cursor: pointer; background: #fff; color: #2a211a; border: 1px solid #d9cdbd; border-radius: 10px; font-family: inherit; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;" style-hover="border-color: #2a211a;">&#8595; Exportar CSV</button>
             </div>
 
-            <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 14px; padding: 16px 18px; display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin-bottom: 16px;">
-              <label style="display: flex; flex-direction: column; gap: 5px;">
+            <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 14px; padding: 16px 18px; display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;">
+              <label style="{{ fLabelStyle }}">
                 <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Período</span>
                 <select value="{{ fPeriodo }}" onChange="{{ setFPeriodo }}" style="height: 40px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a; cursor: pointer;"><option value="tudo">Todo o período</option><option value="hoje">Hoje &middot; 15/06</option></select>
               </label>
-              <label style="display: flex; flex-direction: column; gap: 5px;">
+              <label style="{{ fLabelStyle }}">
                 <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Produto</span>
-                <select value="{{ fProduto }}" onChange="{{ setFProduto }}" style="height: 40px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a; cursor: pointer;"><option value="todos">Todos</option><option value="Espetos">Espetos</option><option value="Bebidas">Bebidas</option><option value="Por&ccedil;&otilde;es">Por&ccedil;&otilde;es</option><option value="Outros">Outros</option></select>
+                <select value="{{ fProduto }}" onChange="{{ setFProduto }}" style="height: 40px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a; cursor: pointer;"><option value="todos">Todos</option><option value="Espetos">Espetos</option><option value="Bebidas">Bebidas</option><option value="Porções">Porções</option><option value="Outros">Outros</option></select>
               </label>
-              <label style="display: flex; flex-direction: column; gap: 5px;">
+              <label style="{{ fLabelStyle }}">
                 <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Mesa</span>
-                <select value="{{ fMesa }}" onChange="{{ setFMesa }}" style="height: 40px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a; cursor: pointer;"><option value="todas">Todas</option><option>Mesa 04</option><option>Mesa 07</option><option>Mesa 08</option><option>Mesa 12</option><option>Balc&atilde;o</option></select>
+                <select value="{{ fMesa }}" onChange="{{ setFMesa }}" style="height: 40px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a; cursor: pointer;"><option value="todas">Todas</option><option>Mesa 04</option><option>Mesa 07</option><option>Mesa 08</option><option>Mesa 12</option><option>Balcão</option></select>
               </label>
-              <label style="display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 160px;">
+              <label style="{{ fBuscaLabelStyle }}">
                 <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Buscar</span>
                 <input value="{{ fBusca }}" onChange="{{ setFBusca }}" placeholder="item, mesa..." style="height: 40px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a;" style-focus="border-color: #cf5a2b; background: #fff;" />
               </label>
               <button onClick="{{ clearFiltros }}" style="height: 40px; padding: 0 16px; cursor: pointer; background: transparent; color: #8c8073; border: 0; font-family: inherit; font-size: 13px;" style-hover="color: #cf5a2b;">Limpar filtros</button>
             </div>
 
-            <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 14px; overflow: hidden;">
-              <div style="overflow-x: auto;">
-                <div style="display: grid; grid-template-columns: 76px 1.5fr 1fr 0.9fr 0.9fr 60px 110px; gap: 12px; padding: 14px 22px; border-bottom: 1px solid #ece3d6; min-width: 700px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">
-                  <span>Hora</span><span>Item</span><span>Categoria</span><span>Mesa</span><span>Destino</span><span style="text-align: right;">Qtd</span><span style="text-align: right;">Total</span>
+            <!-- tabela (desktop) -->
+            <sc-if value="{{ isDesktop }}">
+              <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 14px; overflow: hidden;">
+                <div style="overflow-x: auto;">
+                  <div style="display: grid; grid-template-columns: 76px 1.5fr 1fr 0.9fr 0.9fr 60px 110px; gap: 12px; padding: 14px 22px; border-bottom: 1px solid #ece3d6; min-width: 700px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">
+                    <span>Hora</span><span>Item</span><span>Categoria</span><span>Mesa</span><span>Destino</span><span style="text-align: right;">Qtd</span><span style="text-align: right;">Total</span>
+                  </div>
+                  <sc-if value="{{ hasSaidas }}">
+                    <sc-for list="{{ saidas }}" as="r" hint-placeholder-count="7">
+                      <div style="display: grid; grid-template-columns: 76px 1.5fr 1fr 0.9fr 0.9fr 60px 110px; gap: 12px; padding: 13px 22px; border-bottom: 1px solid #f4eee4; min-width: 700px; align-items: center; font-size: 14px;" style-hover="background: #faf7f2;">
+                        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8c8073;">{{ r.hora }}</span>
+                        <span style="font-weight: 500;">{{ r.item }}</span>
+                        <span style="color: #8c8073;">{{ r.cat }}</span>
+                        <span style="color: #8c8073;">{{ r.mesa }}</span>
+                        <span><span style="{{ r.chipStyle }}">{{ r.destino }}</span></span>
+                        <span style="font-family: 'IBM Plex Mono', monospace; text-align: right;">{{ r.qtd }}</span>
+                        <span style="font-family: 'IBM Plex Mono', monospace; text-align: right; font-weight: 500;">{{ r.totalLabel }}</span>
+                      </div>
+                    </sc-for>
+                  </sc-if>
+                  <sc-if value="{{ noSaidas }}">
+                    <div style="padding: 48px; text-align: center; color: #b6ab9c; font-size: 14px;">Nenhuma saída no filtro atual.</div>
+                  </sc-if>
+                  <div style="display: grid; grid-template-columns: 76px 1.5fr 1fr 0.9fr 0.9fr 60px 110px; gap: 12px; padding: 15px 22px; background: #faf7f2; min-width: 700px; align-items: baseline;">
+                    <span style="grid-column: span 5; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Total &middot; {{ saidasCount }} lançamentos</span>
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; text-align: right;">{{ saidasQtd }}</span>
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; text-align: right; color: #cf5a2b;">{{ saidasTotal }}</span>
+                  </div>
                 </div>
+              </div>
+            </sc-if>
+
+            <!-- cards (mobile) -->
+            <sc-if value="{{ isMobile }}">
+              <div style="display: flex; flex-direction: column; gap: 10px;">
                 <sc-if value="{{ hasSaidas }}">
-                  <sc-for list="{{ saidas }}" as="r" hint-placeholder-count="7">
-                    <div style="display: grid; grid-template-columns: 76px 1.5fr 1fr 0.9fr 0.9fr 60px 110px; gap: 12px; padding: 13px 22px; border-bottom: 1px solid #f4eee4; min-width: 700px; align-items: center; font-size: 14px;" style-hover="background: #faf7f2;">
-                      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8c8073;">{{ r.hora }}</span>
-                      <span style="font-weight: 500;">{{ r.item }}</span>
-                      <span style="color: #8c8073;">{{ r.cat }}</span>
-                      <span style="color: #8c8073;">{{ r.mesa }}</span>
-                      <span><span style="{{ r.chipStyle }}">{{ r.destino }}</span></span>
-                      <span style="font-family: 'IBM Plex Mono', monospace; text-align: right;">{{ r.qtd }}</span>
-                      <span style="font-family: 'IBM Plex Mono', monospace; text-align: right; font-weight: 500;">{{ r.totalLabel }}</span>
+                  <sc-for list="{{ saidas }}" as="r" hint-placeholder-count="5">
+                    <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 12px; padding: 13px 14px; display: flex; flex-direction: column; gap: 8px;">
+                      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                        <span style="font-weight: 600; font-size: 15px;">{{ r.item }}</span>
+                        <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; white-space: nowrap;">{{ r.totalLabel }}</span>
+                      </div>
+                      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <span style="{{ r.chipStyle }}">{{ r.destino }}</span>
+                        <span style="font-size: 13px; color: #8c8073;">{{ r.mesa }} &middot; <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">{{ r.hora }}</span></span>
+                        <span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: #f3ede3; color: #6f6151; padding: 2px 8px; border-radius: 6px;">&times;{{ r.qtd }}</span>
+                      </div>
                     </div>
                   </sc-for>
                 </sc-if>
                 <sc-if value="{{ noSaidas }}">
-                  <div style="padding: 48px; text-align: center; color: #b6ab9c; font-size: 14px;">Nenhuma saída no filtro atual.</div>
+                  <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 12px; padding: 40px 20px; text-align: center; color: #b6ab9c; font-size: 14px;">Nenhuma saída no filtro atual.</div>
                 </sc-if>
-                <div style="display: grid; grid-template-columns: 76px 1.5fr 1fr 0.9fr 0.9fr 60px 110px; gap: 12px; padding: 15px 22px; background: #faf7f2; min-width: 700px; align-items: baseline;">
-                  <span style="grid-column: span 5; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Total &middot; {{ saidasCount }} lan&ccedil;amentos</span>
-                  <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; text-align: right;">{{ saidasQtd }}</span>
-                  <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; text-align: right; color: #cf5a2b;">{{ saidasTotal }}</span>
+                <div style="background: #211913; color: #efe6d8; border-radius: 12px; padding: 14px 16px; display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                  <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #9a8b76;">{{ saidasCount }} lançamentos &middot; {{ saidasQtd }} itens</span>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 18px; color: #f7a072;">{{ saidasTotal }}</span>
                 </div>
               </div>
-            </div>
+            </sc-if>
           </div>
         </sc-if>
 
@@ -261,68 +316,68 @@
         <sc-if value="{{ isGastos }}">
           <div data-screen-label="Gastos">
             <div style="margin-bottom: 22px;">
-              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px; letter-spacing: -0.5px; margin: 0;">Gastos &middot; Junho 2026</h1>
-              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px;">Compras, insumos e custos fixos. O m&ecirc;s fecha sozinho.</p>
+              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 5.5vw, 30px); letter-spacing: -0.5px; margin: 0;">Gastos &middot; Junho 2026</h1>
+              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px; text-wrap: pretty;">Compras, insumos e custos fixos. O mês fecha sozinho.</p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 24px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px;">
               <sc-for list="{{ gastoCats }}" as="g" hint-placeholder-count="4">
                 <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 14px; padding: 16px 18px;">
                   <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">{{ g.label }}</div>
-                  <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 24px; margin: 6px 0 10px;">{{ g.valorLabel }}</div>
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: clamp(19px, 5vw, 24px); margin: 6px 0 10px;">{{ g.valorLabel }}</div>
                   <div style="height: 7px; background: #f1ebe1; border-radius: 6px; overflow: hidden;"><div style="{{ g.barStyle }}"></div></div>
                 </div>
               </sc-for>
             </div>
 
-            <div style="display: grid; grid-template-columns: minmax(300px, 1fr) minmax(0, 1.5fr); gap: 22px; align-items: start;">
+            <div style="{{ gastosGridStyle }}">
               <!-- lançar -->
-              <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 22px;">
-                <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; margin: 0 0 16px;">Lan&ccedil;ar gasto</h2>
+              <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 20px;">
+                <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; margin: 0 0 16px;">Lançar gasto</h2>
                 <div style="display: flex; flex-direction: column; gap: 14px;">
                   <label style="display: flex; flex-direction: column; gap: 6px;">
-                    <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Descri&ccedil;&atilde;o</span>
-                    <input value="{{ gDesc }}" onChange="{{ setGDesc }}" placeholder="Carne &middot; A&ccedil;ougue Boi Bom" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a;" style-focus="border-color: #cf5a2b;" />
+                    <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Descrição</span>
+                    <input value="{{ gDesc }}" onChange="{{ setGDesc }}" placeholder="Carne &middot; Açougue Boi Bom" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a;" style-focus="border-color: #cf5a2b;" />
                   </label>
                   <div style="display: flex; gap: 12px;">
-                    <label style="display: flex; flex-direction: column; gap: 6px; flex: 1;">
+                    <label style="display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0;">
                       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Categoria</span>
                       <select value="{{ gCat }}" onChange="{{ setGCat }}" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a; cursor: pointer;"><option>Insumos</option><option>Bebidas</option><option>Fixos</option><option>Outros</option></select>
                     </label>
-                    <label style="display: flex; flex-direction: column; gap: 6px; width: 130px;">
+                    <label style="display: flex; flex-direction: column; gap: 6px; width: 130px; flex-shrink: 0;">
                       <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Valor</span>
-                      <input value="{{ gValor }}" onChange="{{ setGValor }}" placeholder="0,00" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #2a211a;" style-focus="border-color: #cf5a2b;" />
+                      <input value="{{ gValor }}" onChange="{{ setGValor }}" placeholder="0,00" style="height: 44px; width: 100%; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #2a211a;" style-focus="border-color: #cf5a2b;" />
                     </label>
                   </div>
                   <label style="display: flex; flex-direction: column; gap: 6px;">
                     <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #8c8073;">Data</span>
                     <input value="{{ gData }}" onChange="{{ setGData }}" placeholder="15/06" style="height: 44px; border: 1px solid #d9cdbd; border-radius: 10px; background: #fff; padding: 0 14px; font-family: inherit; font-size: 15px; color: #2a211a;" style-focus="border-color: #cf5a2b;" />
                   </label>
-                  <button onClick="{{ addGasto }}" style="height: 48px; cursor: pointer; background: #cf5a2b; color: #fff; border: 0; border-radius: 11px; font-family: inherit; font-weight: 700; font-size: 15px; margin-top: 2px;" style-hover="background: #b54a1f;">Lan&ccedil;ar gasto</button>
+                  <button onClick="{{ addGasto }}" style="height: 48px; cursor: pointer; background: #cf5a2b; color: #fff; border: 0; border-radius: 11px; font-family: inherit; font-weight: 700; font-size: 15px; margin-top: 2px;" style-hover="background: #b54a1f;">Lançar gasto</button>
                 </div>
               </div>
 
               <!-- lista -->
-              <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 22px;">
+              <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 20px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap;">
-                  <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; margin: 0;">Lan&ccedil;amentos</h2>
+                  <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; margin: 0;">Lançamentos</h2>
                   <select value="{{ gFiltro }}" onChange="{{ setGFiltro }}" style="height: 38px; border: 1px solid #d9cdbd; border-radius: 9px; background: #faf7f2; padding: 0 14px; font-family: inherit; font-size: 14px; color: #2a211a; cursor: pointer;"><option value="todas">Todas as categorias</option><option>Insumos</option><option>Bebidas</option><option>Fixos</option><option>Outros</option></select>
                 </div>
                 <sc-if value="{{ hasGastos }}">
                   <sc-for list="{{ gastos }}" as="g" hint-placeholder-count="6">
-                    <div style="display: grid; grid-template-columns: 58px 1fr auto auto; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid #f4eee4;">
+                    <div style="{{ gastoRowStyle }}">
                       <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8c8073;">{{ g.data }}</span>
-                      <span style="font-weight: 500; font-size: 14px;">{{ g.desc }}</span>
-                      <span style="background: #f3ede3; color: #6f6151; border-radius: 6px; padding: 3px 9px; font-size: 12px; font-weight: 600;">{{ g.cat }}</span>
-                      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; text-align: right; min-width: 92px;">{{ g.valorLabel }}</span>
+                      <span style="font-weight: 500; font-size: 14px; min-width: 0; overflow-wrap: anywhere;">{{ g.desc }}</span>
+                      <span style="background: #f3ede3; color: #6f6151; border-radius: 6px; padding: 3px 9px; font-size: 12px; font-weight: 600; justify-self: start;">{{ g.cat }}</span>
+                      <span style="{{ gastoValStyle }}">{{ g.valorLabel }}</span>
                     </div>
                   </sc-for>
                 </sc-if>
                 <sc-if value="{{ noGastos }}">
-                  <div style="padding: 36px; text-align: center; color: #b6ab9c; font-size: 14px;">Nenhum lan&ccedil;amento nesta categoria.</div>
+                  <div style="padding: 36px; text-align: center; color: #b6ab9c; font-size: 14px;">Nenhum lançamento nesta categoria.</div>
                 </sc-if>
                 <div style="display: flex; align-items: baseline; justify-content: space-between; padding-top: 14px; margin-top: 4px; border-top: 1px solid #ece3d6;">
-                  <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Total do m&ecirc;s</span>
+                  <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Total do mês</span>
                   <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 22px; color: #cf5a2b;">{{ gastosTotal }}</span>
                 </div>
               </div>
@@ -336,29 +391,29 @@
         <sc-if value="{{ isRelatorio }}">
           <div data-screen-label="Relatório">
             <div style="margin-bottom: 22px;">
-              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px; letter-spacing: -0.5px; margin: 0;">Relat&oacute;rio mensal</h1>
-              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px;">Total vendido vs. total gasto &rarr; resultado. Atualiza a cada pedido e gasto.</p>
+              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 5.5vw, 30px); letter-spacing: -0.5px; margin: 0;">Relatório mensal</h1>
+              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px; text-wrap: pretty;">Total vendido vs. total gasto &rarr; resultado. Atualiza a cada pedido e gasto.</p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 24px;">
               <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 22px;">
                 <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Total vendido</div>
-                <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 34px; margin-top: 8px; letter-spacing: -0.5px;">{{ relVendido }}</div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: clamp(26px, 7vw, 34px); margin-top: 8px; letter-spacing: -0.5px;">{{ relVendido }}</div>
                 <div style="font-size: 13px; color: #8c8073; margin-top: 4px;">Junho 2026 &middot; acumulado</div>
               </div>
               <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 22px;">
                 <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8c8073;">Total gasto</div>
-                <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 34px; margin-top: 8px; letter-spacing: -0.5px;">{{ relGasto }}</div>
-                <div style="font-size: 13px; color: #8c8073; margin-top: 4px;">{{ relGastoCount }} lan&ccedil;amentos</div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: clamp(26px, 7vw, 34px); margin-top: 8px; letter-spacing: -0.5px;">{{ relGasto }}</div>
+                <div style="font-size: 13px; color: #8c8073; margin-top: 4px;">{{ relGastoCount }} lançamentos</div>
               </div>
               <div style="background: #211913; border-radius: 16px; padding: 22px; color: #efe6d8;">
                 <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #9a8b76;">Resultado</div>
-                <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 34px; margin-top: 8px; letter-spacing: -0.5px; color: #f7a072;">{{ relResultado }}</div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: clamp(26px, 7vw, 34px); margin-top: 8px; letter-spacing: -0.5px; color: #f7a072;">{{ relResultado }}</div>
                 <div style="font-size: 13px; color: #9a8b76; margin-top: 4px;">Margem {{ relMargem }}</div>
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 18px;">
               <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 16px; padding: 22px;">
                 <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; margin: 0 0 18px;">Vendas por categoria</h2>
                 <sc-for list="{{ vendasCat }}" as="v" hint-placeholder-count="4">
@@ -385,9 +440,32 @@
     </main>
   </div>
 
+  <!-- ============ FICHA BAR (mobile) ============ -->
+  <sc-if value="{{ showFichaBar }}">
+    <div style="position: fixed; left: 12px; right: 12px; bottom: 78px; z-index: 95; background: #211913; color: #f7f3ec; border-radius: 14px; padding: 10px 10px 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 12px 32px rgba(33,25,19,0.35); animation: wfToast 220ms ease;">
+      <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
+        <span style="font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase; color: #9a8b76;">Ficha #{{ fichaNum }} &middot; {{ fichaCount }} itens</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 18px;">{{ fichaTotal }}</span>
+      </div>
+      <button onClick="{{ printFicha }}" style="height: 44px; padding: 0 18px; flex-shrink: 0; cursor: pointer; background: #cf5a2b; color: #fff; border: 0; border-radius: 10px; font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 14px;" style-hover="background: #b54a1f;">&#128424; Registrar</button>
+    </div>
+  </sc-if>
+
+  <!-- ============ BOTTOM NAV (mobile) ============ -->
+  <sc-if value="{{ isMobile }}">
+    <nav style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; background: #211913; display: flex; padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,0.08);">
+      <sc-for list="{{ navMobile }}" as="n" hint-placeholder-count="4">
+        <button onClick="{{ n.onClick }}" style="{{ n.style }}">
+          <span style="{{ n.dotStyle }}"></span>
+          {{ n.label }}
+        </button>
+      </sc-for>
+    </nav>
+  </sc-if>
+
   <!-- ============ TOAST ============ -->
   <sc-if value="{{ hasToast }}">
-    <div style="position: fixed; bottom: 24px; right: 24px; background: #211913; color: #f7f3ec; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; max-width: 380px; z-index: 100; box-shadow: 0 12px 32px rgba(33,25,19,0.32); animation: wfToast 220ms ease;">
+    <div style="{{ toastStyle }}">
       <span style="width: 32px; height: 32px; flex-shrink: 0; background: #cf5a2b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px;">&#10003;</span>
       <span style="font-size: 14px; line-height: 1.3;">{{ toast }}</span>
     </div>
@@ -395,7 +473,7 @@
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;breakpoint&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 760, &quot;min&quot;: 600, &quot;max&quot;: 1000, &quot;step&quot;: 10, &quot;unit&quot;: &quot;px&quot;, &quot;section&quot;: &quot;Layout&quot;}}">
 const STORE_KEY = 'espetaria_vitor_prod_v1';
 
 class Component extends DCLogic {
@@ -415,6 +493,7 @@ class Component extends DCLogic {
     gFiltro: 'todas',
     toast: null,
     now: Date.now(),
+    isMobile: typeof window !== 'undefined' ? window.innerWidth <= 760 : false,
   };
 
   menu = {
@@ -497,8 +576,21 @@ class Component extends DCLogic {
     } catch (e) {}
     if (!loaded) this.setState({ saidas: this.seedSaidas(), gastos: this.seedGastos() });
     this._clock = setInterval(() => this.setState({ now: Date.now() }), 30000);
+
+    const bp = this.props.breakpoint ?? 760;
+    this._mq = window.matchMedia('(max-width: ' + bp + 'px)');
+    this._onMq = (e) => this.setState({ isMobile: e.matches });
+    if (this._mq.addEventListener) this._mq.addEventListener('change', this._onMq);
+    else this._mq.addListener(this._onMq);
+    this.setState({ isMobile: this._mq.matches });
   }
-  componentWillUnmount() { clearInterval(this._clock); clearTimeout(this._t); }
+  componentWillUnmount() {
+    clearInterval(this._clock); clearTimeout(this._t);
+    if (this._mq) {
+      if (this._mq.removeEventListener) this._mq.removeEventListener('change', this._onMq);
+      else this._mq.removeListener(this._onMq);
+    }
+  }
 
   save(extra) {
     const s = { ...this.state, ...(extra || {}) };
@@ -509,7 +601,7 @@ class Component extends DCLogic {
   clockStr() { const d = new Date(); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
   destinoFor(catKey) { return catKey === 'bebidas' ? 'Bar' : 'Cozinha'; }
 
-  setTab(t) { this.setState({ tab: t }); }
+  setTab(t) { this.setState({ tab: t }); try { window.scrollTo({ top: 0 }); } catch (e) {} }
   setCat(c) { this.setState({ cat: c }); }
   setField(k) { return (e) => this.setState({ [k]: e.target.value }); }
 
@@ -545,7 +637,7 @@ class Component extends DCLogic {
         saidas: [...novas, ...s.saidas],
         ficha: [],
         fichaNum: s.fichaNum + 1,
-        toast: 'Ficha #' + s.fichaNum + ' impressa \u2192 ' + novas.length + ' saída(s) registrada(s)',
+        toast: 'Ficha #' + s.fichaNum + ' impressa \u2192 ' + novas.length + ' sa\u00edda(s) registrada(s)',
       };
       this.save(next);
       return next;
@@ -616,9 +708,20 @@ class Component extends DCLogic {
       color: active ? '#fff' : '#c9bca9',
     };
   }
+  mobNavStyle(active) {
+    return {
+      flex: 1, minHeight: '56px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px',
+      background: 'transparent', border: 0, cursor: 'pointer', padding: '6px 2px',
+      fontFamily: "'Hanken Grotesk', sans-serif", fontSize: '12px', fontWeight: active ? 700 : 500,
+      color: active ? '#fff' : '#9a8b76',
+    };
+  }
+  mobDotStyle(active) {
+    return { width: '6px', height: '6px', borderRadius: '50%', background: active ? '#cf5a2b' : 'rgba(255,255,255,0.18)' };
+  }
   pillStyle(active) {
     return {
-      height: '34px', padding: '0 16px', borderRadius: '9px', cursor: 'pointer',
+      height: '36px', padding: '0 16px', borderRadius: '9px', cursor: 'pointer',
       fontFamily: "'Hanken Grotesk', sans-serif", fontSize: '14px', fontWeight: 600,
       border: '1px solid ' + (active ? '#cf5a2b' : '#e2d8c9'),
       background: active ? '#cf5a2b' : '#fff',
@@ -638,10 +741,15 @@ class Component extends DCLogic {
     const s = this.state;
     const tab = s.tab;
     const clock = this.clockStr();
+    const isMobile = s.isMobile;
+    const isDesktop = !isMobile;
 
     const mkNav = (key, label) => ({ label, active: tab === key, style: this.navStyle(tab === key), onClick: () => this.setTab(key) });
     const navOp = [mkNav('pedido', 'Pedido'), mkNav('saidas', 'Sa\u00eddas')];
     const navFin = [mkNav('gastos', 'Gastos'), mkNav('relatorio', 'Relat\u00f3rio')];
+    const navMobile = [['pedido', 'Pedido'], ['saidas', 'Sa\u00eddas'], ['gastos', 'Gastos'], ['relatorio', 'Relat\u00f3rio']].map(([key, label]) => ({
+      label, style: this.mobNavStyle(tab === key), dotStyle: this.mobDotStyle(tab === key), onClick: () => this.setTab(key),
+    }));
     const crumbMap = { pedido: 'Pedido', saidas: 'Sa\u00eddas', gastos: 'Gastos', relatorio: 'Relat\u00f3rio' };
 
     const catList = ['espetos', 'bebidas', 'porcoes', 'outros'].map((k) => ({
@@ -658,6 +766,7 @@ class Component extends DCLogic {
       onInc: () => this.incItem(l.name), onDec: () => this.decItem(l.name),
     }));
     const total = s.ficha.reduce((a, l) => a + l.price * l.qty, 0);
+    const fichaCount = s.ficha.reduce((a, l) => a + l.qty, 0);
 
     // saídas
     const filtered = this.getFilteredSaidas();
@@ -679,7 +788,7 @@ class Component extends DCLogic {
       barStyle: { width: Math.round((c.valor / gMax) * 100) + '%', height: '100%', background: '#cf5a2b', borderRadius: '6px' },
     }));
 
-    // relatório (ao vivo) — base mensal acumulada + saídas registradas na sessão
+    // relatório
     const allSaidas = s.saidas || [];
     const VENDA_BASE = { 'Espetos': 16200, 'Bebidas': 12400, 'Por\u00e7\u00f5es': 7800, 'Outros': 1720 };
     const vendaCatSum = (catLabel) => (VENDA_BASE[catLabel] || 0) + allSaidas.filter((r) => r.cat === catLabel).reduce((a, r) => a + r.valor, 0);
@@ -699,11 +808,53 @@ class Component extends DCLogic {
       barStyle: { width: Math.round((c.valor / gMaxR) * 100) + '%', height: '100%', background: '#9a8b76', borderRadius: '6px' },
     }));
 
+    // ---- responsive layout styles ----
+    const contentStyle = isMobile
+      ? { padding: '16px 14px 160px' }
+      : { maxWidth: '1200px', margin: '0 auto', padding: '32px' };
+    const formGridStyle = isMobile
+      ? { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }
+      : { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '22px' };
+    const obsLabelStyle = isMobile
+      ? { display: 'flex', flexDirection: 'column', gap: '6px', gridColumn: '1 / -1' }
+      : { display: 'flex', flexDirection: 'column', gap: '6px' };
+    const pedidoGridStyle = isMobile
+      ? { display: 'flex', flexDirection: 'column', gap: '18px' }
+      : { display: 'grid', gridTemplateColumns: 'minmax(0, 1.55fr) minmax(300px, 1fr)', gap: '22px', alignItems: 'start' };
+    const fichaWrapStyle = isMobile ? {} : { position: 'sticky', top: '88px' };
+    const buscaStyle = isMobile
+      ? { height: '38px', flex: '1 1 130px', minWidth: '0', border: '1px solid #d9cdbd', borderRadius: '9px', background: '#faf7f2', padding: '0 14px', fontFamily: 'inherit', fontSize: '14px', color: '#2a211a' }
+      : { height: '38px', width: '200px', border: '1px solid #d9cdbd', borderRadius: '9px', background: '#faf7f2', padding: '0 14px', fontFamily: 'inherit', fontSize: '14px', color: '#2a211a' };
+    const fLabelStyle = isMobile
+      ? { display: 'flex', flexDirection: 'column', gap: '5px', flex: '1 1 42%', minWidth: '130px' }
+      : { display: 'flex', flexDirection: 'column', gap: '5px' };
+    const fBuscaLabelStyle = isMobile
+      ? { display: 'flex', flexDirection: 'column', gap: '5px', flex: '1 1 100%' }
+      : { display: 'flex', flexDirection: 'column', gap: '5px', flex: 1, minWidth: '160px' };
+    const gastosGridStyle = isMobile
+      ? { display: 'flex', flexDirection: 'column', gap: '18px' }
+      : { display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) minmax(0, 1.5fr)', gap: '22px', alignItems: 'start' };
+    const gastoRowStyle = isMobile
+      ? { display: 'grid', gridTemplateColumns: '52px 1fr auto', gap: '6px 10px', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid #f4eee4' }
+      : { display: 'grid', gridTemplateColumns: '58px 1fr auto auto', gap: '12px', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid #f4eee4' };
+    const gastoValStyle = isMobile
+      ? { fontFamily: "'IBM Plex Mono', monospace", fontSize: '14px', textAlign: 'right', gridColumn: '3', gridRow: '1' }
+      : { fontFamily: "'IBM Plex Mono', monospace", fontSize: '14px', textAlign: 'right', minWidth: '92px' };
+    const toastStyle = isMobile
+      ? { position: 'fixed', left: '14px', right: '14px', bottom: '84px', background: '#211913', color: '#f7f3ec', borderRadius: '12px', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', zIndex: 100, boxShadow: '0 12px 32px rgba(33,25,19,0.32)', animation: 'wfToast 220ms ease' }
+      : { position: 'fixed', bottom: '24px', right: '24px', background: '#211913', color: '#f7f3ec', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '12px', maxWidth: '380px', zIndex: 100, boxShadow: '0 12px 32px rgba(33,25,19,0.32)', animation: 'wfToast 220ms ease' };
+
     return {
-      navOp, navFin, crumb: crumbMap[tab], clock,
+      navOp, navFin, navMobile, crumb: crumbMap[tab], clock,
+      isMobile, isDesktop,
       isPedido: tab === 'pedido', isSaidas: tab === 'saidas', isGastos: tab === 'gastos', isRelatorio: tab === 'relatorio',
       toPedido: () => this.setTab('pedido'),
       resetDemo: () => this.resetDemo(),
+
+      contentStyle, formGridStyle, obsLabelStyle, pedidoGridStyle, fichaWrapStyle, buscaStyle,
+      fLabelStyle, fBuscaLabelStyle, gastosGridStyle, gastoRowStyle, gastoValStyle, toastStyle,
+      showFichaBar: isMobile && tab === 'pedido' && s.ficha.length > 0,
+      fichaCount,
 
       cat: s.cat, catList, menuItems, menuEmpty: menuItems.length === 0,
       busca: s.busca, setBusca: this.setField('busca'),
