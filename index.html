@@ -45,7 +45,15 @@
         </div>
       </div>
 
-      <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 8px 12px 6px;">Operação</div>
+      <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 8px 12px 6px;">Garçom</div>
+      <sc-for list="{{ navGarcom }}" as="n" hint-placeholder-count="2">
+        <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="background: rgba(255,255,255,0.06);">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.85;"></span>
+          {{ n.label }}
+        </button>
+      </sc-for>
+
+      <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 16px 12px 6px;">Produção</div>
       <sc-for list="{{ navOp }}" as="n" hint-placeholder-count="2">
         <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="background: rgba(255,255,255,0.06);">
           <span style="width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.85;"></span>
@@ -211,6 +219,170 @@
                   <button onClick="{{ clearFicha }}" style="height: 48px; padding: 0 18px; cursor: pointer; background: #fff; color: #2a211a; border: 1px solid #d9cdbd; border-radius: 11px; font-family: 'Hanken Grotesk', sans-serif; font-weight: 600; font-size: 15px;" style-hover="border-color: #2a211a;">Limpar</button>
                 </div>
               </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============================================================
+             COMANDAS (garçom acompanha preparo/pronto)
+        ============================================================ -->
+        <sc-if value="{{ isAcompanhar }}">
+          <div data-screen-label="Comandas">
+            <div style="margin-bottom: 22px;">
+              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 5.5vw, 30px); letter-spacing: -0.5px; margin: 0;">Comandas</h1>
+              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px; text-wrap: pretty;">Acompanhe o preparo dos seus pedidos e retire quando estiverem prontos.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 14px;">
+              <sc-for list="{{ acompanhar }}" as="p" hint-placeholder-count="3">
+                <div style="{{ p.cardStyle }}">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.5px; color: #8c8073;">FICHA #{{ p.num }}</span>
+                    <span style="{{ p.badgeStyle }}">{{ p.statusLabel }}</span>
+                  </div>
+                  <div>
+                    <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px;">{{ p.mesa }}</div>
+                    <div style="font-size: 12px; color: #8c8073; margin-top: 2px;"><span style="font-family: 'IBM Plex Mono', monospace;">{{ p.hora }}</span> &middot; {{ p.destino }} &middot; Garçom {{ p.garcom }}</div>
+                  </div>
+                  <div style="border-top: 1px dashed #ddd2c2; padding-top: 8px; display: flex; flex-direction: column; gap: 6px;">
+                    <sc-for list="{{ p.itens }}" as="i" hint-placeholder-count="2">
+                      <div style="display: flex; gap: 8px; font-size: 14px; align-items: baseline;">
+                        <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600;">{{ i.qty }}&times;</span>
+                        <span style="font-weight: 500;">{{ i.name }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ p.isPronto }}">
+                    <button onClick="{{ p.onAdvance }}" style="height: 44px; width: 100%; border: 0; border-radius: 10px; cursor: pointer; background: #1f8a5b; color: #fff; font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 14px; margin-top: auto;" style-hover="filter: brightness(1.1);">{{ p.retirarLabel }}</button>
+                  </sc-if>
+                  <sc-if value="{{ p.isPreparo }}">
+                    <div style="height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: #faf7f2; border: 1px dashed #ddd2c2; color: #8c8073; font-size: 13px; margin-top: auto;">Aguarde — retire quando estiver pronto</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noAcompanhar }}">
+                <div style="grid-column: 1 / -1; background: #fff; border: 1px dashed #ddd2c2; border-radius: 14px; padding: 48px 20px; text-align: center; color: #b6ab9c; font-size: 14px;">Nenhuma comanda em preparo.<br /><span style="font-size: 13px;">registre um pedido para acompanhar aqui</span></div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============================================================
+             MAIS (menu financeiro no mobile)
+        ============================================================ -->
+        <sc-if value="{{ isMais }}">
+          <div data-screen-label="Mais">
+            <div style="margin-bottom: 22px;">
+              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 5.5vw, 30px); letter-spacing: -0.5px; margin: 0;">Mais</h1>
+              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px;">Financeiro e relatórios do salão.</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <sc-for list="{{ maisItems }}" as="m" hint-placeholder-count="3">
+                <button onClick="{{ m.onClick }}" style="background: #fff; border: 1px solid #ece3d6; border-radius: 14px; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; text-align: left; color: #2a211a; font-family: 'Hanken Grotesk', sans-serif;" style-hover="border-color: #cf5a2b;">
+                  <span style="display: flex; flex-direction: column; gap: 3px;">
+                    <span style="font-weight: 700; font-size: 16px;">{{ m.label }}</span>
+                    <span style="font-size: 13px; color: #8c8073;">{{ m.desc }}</span>
+                  </span>
+                  <span style="color: #cdbfae; font-size: 20px;">&rsaquo;</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============================================================
+             COZINHA
+        ============================================================ -->
+        <sc-if value="{{ isCozinha }}">
+          <div data-screen-label="Cozinha">
+            <div style="margin-bottom: 22px;">
+              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 5.5vw, 30px); letter-spacing: -0.5px; margin: 0;">Cozinha</h1>
+              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px; text-wrap: pretty;">Comandas impressas na cozinha. Avance o status conforme o preparo.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 14px;">
+              <sc-for list="{{ pedidosCozinha }}" as="p" hint-placeholder-count="3">
+                <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.5px; color: #8c8073;">FICHA #{{ p.num }}</span>
+                    <span style="{{ p.badgeStyle }}">{{ p.statusLabel }}</span>
+                  </div>
+                  <div>
+                    <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px;">{{ p.mesa }}</div>
+                    <div style="font-size: 12px; color: #8c8073; margin-top: 2px;"><span style="font-family: 'IBM Plex Mono', monospace;">{{ p.hora }}</span> &middot; Garçom {{ p.garcom }}</div>
+                  </div>
+                  <sc-if value="{{ p.hasObs }}">
+                    <div style="font-size: 13px; color: #a8431d; background: #fbeee6; border-radius: 8px; padding: 7px 10px;">&#9998; {{ p.obs }}</div>
+                  </sc-if>
+                  <div style="border-top: 1px dashed #ddd2c2; padding-top: 8px; display: flex; flex-direction: column; gap: 6px;">
+                    <sc-for list="{{ p.itens }}" as="i" hint-placeholder-count="2">
+                      <div style="display: flex; gap: 8px; font-size: 14px; align-items: baseline;">
+                        <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600;">{{ i.qty }}&times;</span>
+                        <span style="font-weight: 500;">{{ i.name }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <button onClick="{{ p.onAdvance }}" style="{{ p.btnStyle }}" style-hover="filter: brightness(1.1);">{{ p.btnLabel }}</button>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noCozinha }}">
+                <div style="grid-column: 1 / -1; background: #fff; border: 1px dashed #ddd2c2; border-radius: 14px; padding: 48px 20px; text-align: center; color: #b6ab9c; font-size: 14px;">Nenhuma comanda na cozinha.</div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============================================================
+             BALCÃO
+        ============================================================ -->
+        <sc-if value="{{ isBalcao }}">
+          <div data-screen-label="Balcão">
+            <div style="margin-bottom: 22px;">
+              <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 5.5vw, 30px); letter-spacing: -0.5px; margin: 0;">Balcão</h1>
+              <p style="margin: 6px 0 0; color: #8c8073; font-size: 15px; text-wrap: pretty;">Comandas de bebidas impressas no balcão e contas abertas por mesa.</p>
+            </div>
+
+            <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; margin: 0 0 12px;">Comandas do bar</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 14px; margin-bottom: 28px;">
+              <sc-for list="{{ pedidosBalcao }}" as="p" hint-placeholder-count="2">
+                <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.5px; color: #8c8073;">FICHA #{{ p.num }}</span>
+                    <span style="{{ p.badgeStyle }}">{{ p.statusLabel }}</span>
+                  </div>
+                  <div>
+                    <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px;">{{ p.mesa }}</div>
+                    <div style="font-size: 12px; color: #8c8073; margin-top: 2px;"><span style="font-family: 'IBM Plex Mono', monospace;">{{ p.hora }}</span> &middot; Garçom {{ p.garcom }}</div>
+                  </div>
+                  <div style="border-top: 1px dashed #ddd2c2; padding-top: 8px; display: flex; flex-direction: column; gap: 6px;">
+                    <sc-for list="{{ p.itens }}" as="i" hint-placeholder-count="2">
+                      <div style="display: flex; gap: 8px; font-size: 14px; align-items: baseline;">
+                        <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600;">{{ i.qty }}&times;</span>
+                        <span style="font-weight: 500;">{{ i.name }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <button onClick="{{ p.onAdvance }}" style="{{ p.btnStyle }}" style-hover="filter: brightness(1.1);">{{ p.btnLabel }}</button>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noBalcaoPed }}">
+                <div style="grid-column: 1 / -1; background: #fff; border: 1px dashed #ddd2c2; border-radius: 14px; padding: 32px 20px; text-align: center; color: #b6ab9c; font-size: 14px;">Nenhuma comanda de bebidas na fila.</div>
+              </sc-if>
+            </div>
+
+            <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; margin: 0 0 12px;">Contas abertas</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 14px;">
+              <sc-for list="{{ contas }}" as="c" hint-placeholder-count="3">
+                <div style="background: #fff; border: 1px solid #ece3d6; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px;">{{ c.mesa }}</span>
+                    <span style="font-size: 12px; color: #8c8073;">{{ c.itensLabel }}</span>
+                  </div>
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 26px; margin: 2px 0 8px;">{{ c.totalLabel }}</div>
+                  <button onClick="{{ c.onFechar }}" style="height: 44px; width: 100%; border: 0; border-radius: 10px; cursor: pointer; background: #211913; color: #f7f3ec; font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 14px;" style-hover="background: #cf5a2b;">Fechar conta</button>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noContas }}">
+                <div style="grid-column: 1 / -1; background: #fff; border: 1px dashed #ddd2c2; border-radius: 14px; padding: 32px 20px; text-align: center; color: #b6ab9c; font-size: 14px;">Nenhuma conta aberta.</div>
+              </sc-if>
             </div>
           </div>
         </sc-if>
@@ -488,6 +660,8 @@ class Component extends DCLogic {
     fichaNum: 1284,
     saidas: null,
     gastos: null,
+    pedidos: null,
+    contas: null,
     fPeriodo: 'tudo', fProduto: 'todos', fMesa: 'todas', fBusca: '',
     gDesc: '', gCat: 'Insumos', gValor: '', gData: '',
     gFiltro: 'todas',
@@ -554,6 +728,22 @@ class Component extends DCLogic {
       { hora: '19:30', data: '15/06', item: 'Milk Shake 300ml', cat: 'Sobremesas', mesa: 'Mesa 12', destino: 'Cozinha', qtd: 1, valor: 17 },
     ];
   }
+  seedPedidos() {
+    return [
+      { id: '1282-Cozinha', num: 1282, mesa: 'Balc\u00e3o', garcom: 'Marco', hora: '20:33', obs: 'sem picles', destino: 'Cozinha', itens: [{ name: 'Smash Duplo', qty: 2 }], status: 'fila' },
+      { id: '1281-Cozinha', num: 1281, mesa: 'Mesa 04', garcom: 'J\u00falia', hora: '20:48', obs: '', destino: 'Cozinha', itens: [{ name: 'X-Bacon', qty: 1 }, { name: 'Batata Frita', qty: 1 }], status: 'preparo' },
+      { id: '1280-Cozinha', num: 1280, mesa: 'Mesa 07', garcom: 'Marco', hora: '20:14', obs: '', destino: 'Cozinha', itens: [{ name: 'Pastel Carne c/ Queijo', qty: 3 }], status: 'pronto' },
+      { id: '1283-Balc\u00e3o', num: 1283, mesa: 'Mesa 12', garcom: 'Renan', hora: '20:21', obs: '', destino: 'Balc\u00e3o', itens: [{ name: 'Heineken Long Neck', qty: 4 }], status: 'fila' },
+    ];
+  }
+  seedContas() {
+    return {
+      'Mesa 07': { itens: 5, total: 67 },
+      'Mesa 04': { itens: 2, total: 60 },
+      'Mesa 12': { itens: 5, total: 53 },
+      'Balc\u00e3o': { itens: 2, total: 64 },
+    };
+  }
   seedGastos() {
     return [
       { data: '14/06', desc: 'Blend 180g \u00b7 A\u00e7ougue Boi Bom', cat: 'Insumos', valor: 1240 },
@@ -583,12 +773,16 @@ class Component extends DCLogic {
       if (raw) {
         const d = JSON.parse(raw);
         if (d && Array.isArray(d.saidas)) {
-          this.setState({ saidas: d.saidas, gastos: d.gastos || this.seedGastos(), fichaNum: d.fichaNum || 1284 });
+          this.setState({
+            saidas: d.saidas, gastos: d.gastos || this.seedGastos(), fichaNum: d.fichaNum || 1284,
+            pedidos: Array.isArray(d.pedidos) ? d.pedidos : this.seedPedidos(),
+            contas: d.contas && typeof d.contas === 'object' ? d.contas : this.seedContas(),
+          });
           loaded = true;
         }
       }
     } catch (e) {}
-    if (!loaded) this.setState({ saidas: this.seedSaidas(), gastos: this.seedGastos() });
+    if (!loaded) this.setState({ saidas: this.seedSaidas(), gastos: this.seedGastos(), pedidos: this.seedPedidos(), contas: this.seedContas() });
     this._clock = setInterval(() => this.setState({ now: Date.now() }), 30000);
 
     const bp = this.props.breakpoint ?? 760;
@@ -608,7 +802,7 @@ class Component extends DCLogic {
 
   save(extra) {
     const s = { ...this.state, ...(extra || {}) };
-    try { localStorage.setItem(STORE_KEY, JSON.stringify({ saidas: s.saidas, gastos: s.gastos, fichaNum: s.fichaNum })); } catch (e) {}
+    try { localStorage.setItem(STORE_KEY, JSON.stringify({ saidas: s.saidas, gastos: s.gastos, fichaNum: s.fichaNum, pedidos: s.pedidos, contas: s.contas })); } catch (e) {}
   }
 
   brl(n) { return 'R$ ' + Number(n).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
@@ -647,11 +841,34 @@ class Component extends DCLogic {
         hora, data: '15/06', item: l.name, cat: l.catLabel, mesa: s.mesa,
         destino: this.destinoFor(l.catKey), qtd: l.qty, valor: l.price * l.qty,
       }));
+      // divide a ficha em comandas por destino
+      const groups = { 'Cozinha': [], 'Balc\u00e3o': [] };
+      s.ficha.forEach((l) => {
+        const dest = l.catKey === 'bebidas' ? 'Balc\u00e3o' : 'Cozinha';
+        groups[dest].push({ name: l.name, qty: l.qty });
+      });
+      const novosPedidos = [];
+      Object.keys(groups).forEach((dest) => {
+        if (groups[dest].length) novosPedidos.push({
+          id: s.fichaNum + '-' + dest, num: s.fichaNum, mesa: s.mesa, garcom: s.garcom, hora,
+          obs: (s.obs || '').trim(), destino: dest, itens: groups[dest], status: 'fila',
+        });
+      });
+      // soma na conta da mesa
+      const contas = { ...(s.contas || {}) };
+      const addQtd = s.ficha.reduce((a, l) => a + l.qty, 0);
+      const addVal = s.ficha.reduce((a, l) => a + l.price * l.qty, 0);
+      const prev = contas[s.mesa] || { itens: 0, total: 0 };
+      contas[s.mesa] = { itens: prev.itens + addQtd, total: prev.total + addVal };
+      const destinos = novosPedidos.map((p) => p.destino).join(' + ');
       const next = {
         saidas: [...novas, ...s.saidas],
+        pedidos: [...novosPedidos, ...(s.pedidos || [])],
+        contas,
         ficha: [],
+        obs: '',
         fichaNum: s.fichaNum + 1,
-        toast: 'Ficha #' + s.fichaNum + ' impressa \u2192 ' + novas.length + ' sa\u00edda(s) registrada(s)',
+        toast: 'Ficha #' + s.fichaNum + ' impressa \u2192 ' + destinos,
       };
       this.save(next);
       return next;
@@ -679,9 +896,53 @@ class Component extends DCLogic {
 
   clearFiltros() { this.setState({ fPeriodo: 'tudo', fProduto: 'todos', fMesa: 'todas', fBusca: '' }); }
 
+  avancarPedido(id) {
+    this.setState((s) => {
+      const p = (s.pedidos || []).find((x) => x.id === id);
+      if (!p) return {};
+      let pedidos, toast;
+      if (p.status === 'pronto') {
+        pedidos = s.pedidos.filter((x) => x.id !== id);
+        toast = 'Comanda #' + p.num + ' entregue \u00b7 ' + p.mesa;
+      } else {
+        const nextStatus = p.status === 'fila' ? 'preparo' : 'pronto';
+        pedidos = s.pedidos.map((x) => x.id === id ? { ...x, status: nextStatus } : x);
+        toast = 'Comanda #' + p.num + (nextStatus === 'preparo' ? ' em preparo' : ' pronta \u00b7 ' + p.mesa);
+      }
+      const next = { pedidos, toast };
+      this.save({ ...s, ...next });
+      return next;
+    });
+    clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+
+  fecharConta(mesa) {
+    this.setState((s) => {
+      const contas = { ...(s.contas || {}) };
+      const c = contas[mesa];
+      if (!c) return {};
+      delete contas[mesa];
+      const next = { contas, toast: 'Conta fechada \u00b7 ' + mesa + ' \u00b7 ' + this.brl(c.total) };
+      this.save({ ...s, ...next });
+      return next;
+    });
+    clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: null }), 3200);
+  }
+
+  statusLabels = { fila: 'Na fila', preparo: 'Em preparo', pronto: 'Pronto' };
+  advanceLabels = { fila: 'Iniciar preparo', preparo: 'Marcar pronto', pronto: 'Entregar' };
+  badgeStyle(status) {
+    const m = { fila: ['#f3ede3', '#6f6151'], preparo: ['#fbeee6', '#a8431d'], pronto: ['#e6f2ea', '#1f7a4d'] }[status] || ['#f3ede3', '#6f6151'];
+    return { display: 'inline-block', padding: '3px 10px', borderRadius: '7px', fontSize: '11px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', background: m[0], color: m[1] };
+  }
+  advBtnStyle(status) {
+    const bg = status === 'fila' ? '#2a211a' : status === 'preparo' ? '#cf5a2b' : '#1f8a5b';
+    return { height: '44px', width: '100%', border: 0, borderRadius: '10px', cursor: 'pointer', background: bg, color: '#fff', fontFamily: "'Hanken Grotesk', sans-serif", fontWeight: 700, fontSize: '14px', marginTop: 'auto' };
+  }
+
   resetDemo() {
     try { localStorage.removeItem(STORE_KEY); } catch (e) {}
-    this.setState({ saidas: this.seedSaidas(), gastos: this.seedGastos(), ficha: [], fichaNum: 1284, toast: 'Demo reiniciada.' });
+    this.setState({ saidas: this.seedSaidas(), gastos: this.seedGastos(), pedidos: this.seedPedidos(), contas: this.seedContas(), ficha: [], fichaNum: 1284, toast: 'Demo reiniciada.' });
     clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: null }), 2500);
   }
 
@@ -724,9 +985,9 @@ class Component extends DCLogic {
   }
   mobNavStyle(active) {
     return {
-      flex: 1, minHeight: '56px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px',
-      background: 'transparent', border: 0, cursor: 'pointer', padding: '6px 2px',
-      fontFamily: "'Hanken Grotesk', sans-serif", fontSize: '12px', fontWeight: active ? 700 : 500,
+      flex: 1, minWidth: 0, minHeight: '56px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px',
+      background: 'transparent', border: 0, cursor: 'pointer', padding: '6px 0', whiteSpace: 'nowrap',
+      fontFamily: "'Hanken Grotesk', sans-serif", fontSize: '11px', fontWeight: active ? 700 : 500,
       color: active ? '#fff' : '#9a8b76',
     };
   }
@@ -758,13 +1019,65 @@ class Component extends DCLogic {
     const isMobile = s.isMobile;
     const isDesktop = !isMobile;
 
+    const pedidosAll = s.pedidos || [];
+    const nCozinha = pedidosAll.filter((p) => p.destino === 'Cozinha').length;
+    const nBarPed = pedidosAll.filter((p) => p.destino === 'Balc\u00e3o').length;
+    const nContas = Object.keys(s.contas || {}).length;
+    const nBalcao = nBarPed + nContas;
+
+    const nAtivas = pedidosAll.filter((p) => p.status === 'preparo' || p.status === 'pronto').length;
+    const nProntos = pedidosAll.filter((p) => p.status === 'pronto').length;
+
     const mkNav = (key, label) => ({ label, active: tab === key, style: this.navStyle(tab === key), onClick: () => this.setTab(key) });
-    const navOp = [mkNav('pedido', 'Pedido'), mkNav('saidas', 'Sa\u00eddas')];
-    const navFin = [mkNav('gastos', 'Gastos'), mkNav('relatorio', 'Relat\u00f3rio')];
-    const navMobile = [['pedido', 'Pedido'], ['saidas', 'Sa\u00eddas'], ['gastos', 'Gastos'], ['relatorio', 'Relat\u00f3rio']].map(([key, label]) => ({
-      label, style: this.mobNavStyle(tab === key), dotStyle: this.mobDotStyle(tab === key), onClick: () => this.setTab(key),
+    const navGarcom = [
+      mkNav('pedido', 'Pedido'),
+      mkNav('acompanhar', nAtivas ? 'Comandas \u00b7 ' + nAtivas : 'Comandas'),
+    ];
+    const navOp = [
+      mkNav('cozinha', nCozinha ? 'Cozinha \u00b7 ' + nCozinha : 'Cozinha'),
+      mkNav('balcao', nBalcao ? 'Balc\u00e3o \u00b7 ' + nBalcao : 'Balc\u00e3o'),
+    ];
+    const navFin = [mkNav('saidas', 'Sa\u00eddas'), mkNav('gastos', 'Gastos'), mkNav('relatorio', 'Relat\u00f3rio')];
+    const maisActive = ['mais', 'saidas', 'gastos', 'relatorio'].includes(tab);
+    const navMobile = [
+      { key: 'pedido', label: 'Pedido', active: tab === 'pedido' },
+      { key: 'acompanhar', label: nProntos ? 'Comandas \u00b7 ' + nProntos : 'Comandas', active: tab === 'acompanhar' },
+      { key: 'cozinha', label: 'Cozinha', active: tab === 'cozinha' },
+      { key: 'balcao', label: 'Balc\u00e3o', active: tab === 'balcao' },
+      { key: 'mais', label: 'Mais', active: maisActive },
+    ].map((n) => ({
+      label: n.label, style: this.mobNavStyle(n.active), dotStyle: this.mobDotStyle(n.active), onClick: () => this.setTab(n.key),
     }));
-    const crumbMap = { pedido: 'Pedido', saidas: 'Sa\u00eddas', gastos: 'Gastos', relatorio: 'Relat\u00f3rio' };
+    const maisItems = [
+      { label: 'Sa\u00eddas', desc: 'Livro de sa\u00eddas e exporta\u00e7\u00e3o CSV', onClick: () => this.setTab('saidas') },
+      { label: 'Gastos', desc: 'Lan\u00e7amentos e categorias do m\u00eas', onClick: () => this.setTab('gastos') },
+      { label: 'Relat\u00f3rio', desc: 'Vendido vs. gasto \u00b7 resultado', onClick: () => this.setTab('relatorio') },
+    ];
+    const crumbMap = { pedido: 'Pedido', acompanhar: 'Comandas', mais: 'Mais', cozinha: 'Cozinha', balcao: 'Balc\u00e3o', saidas: 'Sa\u00eddas', gastos: 'Gastos', relatorio: 'Relat\u00f3rio' };
+
+    const mkPedido = (p) => ({
+      ...p, hasObs: !!p.obs,
+      badgeStyle: this.badgeStyle(p.status), statusLabel: this.statusLabels[p.status],
+      btnLabel: this.advanceLabels[p.status], btnStyle: this.advBtnStyle(p.status),
+      onAdvance: () => this.avancarPedido(p.id),
+    });
+    const pedidosCozinha = pedidosAll.filter((p) => p.destino === 'Cozinha').map(mkPedido);
+    const pedidosBalcao = pedidosAll.filter((p) => p.destino === 'Balc\u00e3o').map(mkPedido);
+    const cardBase = { background: '#fff', border: '1px solid #ece3d6', borderRadius: '14px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '10px' };
+    const acompanhar = pedidosAll
+      .slice()
+      .sort((a, b) => (a.status === 'pronto' ? 0 : 1) - (b.status === 'pronto' ? 0 : 1))
+      .map((p) => ({
+        ...mkPedido(p),
+        isPronto: p.status === 'pronto',
+        isPreparo: p.status !== 'pronto',
+        retirarLabel: p.destino === 'Cozinha' ? 'Retirar na Cozinha' : 'Retirar no Balc\u00e3o',
+        cardStyle: p.status === 'pronto' ? { ...cardBase, border: '2px solid #1f8a5b', boxShadow: '0 6px 18px rgba(31,138,91,0.12)' } : cardBase,
+      }));
+    const contasList = Object.keys(s.contas || {}).sort().map((mesa) => {
+      const c = s.contas[mesa];
+      return { mesa, itensLabel: c.itens + (c.itens === 1 ? ' item' : ' itens'), totalLabel: this.brl(c.total), onFechar: () => this.fecharConta(mesa) };
+    });
 
     const catList = ['burgers', 'pasteis', 'porcoes', 'bebidas', 'sobremesas'].map((k) => ({
       label: this.catKeyLabel[k], style: this.pillStyle(k === s.cat), onClick: () => this.setCat(k),
@@ -862,6 +1175,11 @@ class Component extends DCLogic {
       navOp, navFin, navMobile, crumb: crumbMap[tab], clock,
       isMobile, isDesktop,
       isPedido: tab === 'pedido', isSaidas: tab === 'saidas', isGastos: tab === 'gastos', isRelatorio: tab === 'relatorio',
+      isCozinha: tab === 'cozinha', isBalcao: tab === 'balcao',
+      isAcompanhar: tab === 'acompanhar', isMais: tab === 'mais',
+      navGarcom, maisItems, acompanhar, noAcompanhar: acompanhar.length === 0,
+      pedidosCozinha, pedidosBalcao, noCozinha: pedidosCozinha.length === 0, noBalcaoPed: pedidosBalcao.length === 0,
+      contas: contasList, noContas: contasList.length === 0,
       toPedido: () => this.setTab('pedido'),
       resetDemo: () => this.resetDemo(),
 
