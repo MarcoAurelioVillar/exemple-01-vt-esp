@@ -48,7 +48,7 @@
       <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 8px 12px 6px;">Garçom</div>
       <sc-for list="{{ navGarcom }}" as="n" hint-placeholder-count="2">
         <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="background: rgba(255,255,255,0.06);">
-          <span style="width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.85;"></span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="{{ n.icon }}"></path></svg>
           {{ n.label }}
         </button>
       </sc-for>
@@ -56,7 +56,7 @@
       <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 16px 12px 6px;">Produção</div>
       <sc-for list="{{ navOp }}" as="n" hint-placeholder-count="2">
         <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="background: rgba(255,255,255,0.06);">
-          <span style="width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.85;"></span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="{{ n.icon }}"></path></svg>
           {{ n.label }}
         </button>
       </sc-for>
@@ -64,7 +64,7 @@
       <div style="font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #6f6151; padding: 16px 12px 6px;">Financeiro</div>
       <sc-for list="{{ navFin }}" as="n" hint-placeholder-count="2">
         <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="background: rgba(255,255,255,0.06);">
-          <span style="width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.85;"></span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="{{ n.icon }}"></path></svg>
           {{ n.label }}
         </button>
       </sc-for>
@@ -628,7 +628,7 @@
     <nav style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; background: #211913; display: flex; padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,0.08);">
       <sc-for list="{{ navMobile }}" as="n" hint-placeholder-count="4">
         <button onClick="{{ n.onClick }}" style="{{ n.style }}">
-          <span style="{{ n.dotStyle }}"></span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ n.icon }}"></path></svg>
           {{ n.label }}
         </button>
       </sc-for>
@@ -929,6 +929,16 @@ class Component extends DCLogic {
     clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: null }), 3200);
   }
 
+  icons = {
+    pedido: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 8v8 M8 12h8',
+    acompanhar: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 7v5l3 2',
+    cozinha: 'M12 3c2.5 3.5 5.5 5.5 5.5 9.5a5.5 5.5 0 0 1-11 0C6.5 8.5 9.5 6.5 12 3z',
+    balcao: 'M3 7h18v10H3z M12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z',
+    saidas: 'M12 4v12 M7 11l5 5 5-5 M5 20h14',
+    gastos: 'M4 12l8-8h8v8l-8 8-8-8z M15.5 8.5l0.01 0',
+    relatorio: 'M5 20V10 M12 20V4 M19 20v-7',
+    mais: 'M4 12h2 M11 12h2 M18 12h2',
+  };
   statusLabels = { fila: 'Na fila', preparo: 'Em preparo', pronto: 'Pronto' };
   advanceLabels = { fila: 'Iniciar preparo', preparo: 'Marcar pronto', pronto: 'Entregar' };
   badgeStyle(status) {
@@ -988,7 +998,7 @@ class Component extends DCLogic {
       flex: 1, minWidth: 0, minHeight: '56px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px',
       background: 'transparent', border: 0, cursor: 'pointer', padding: '6px 0', whiteSpace: 'nowrap',
       fontFamily: "'Hanken Grotesk', sans-serif", fontSize: '11px', fontWeight: active ? 700 : 500,
-      color: active ? '#fff' : '#9a8b76',
+      color: active ? '#f7a072' : '#9a8b76',
     };
   }
   mobDotStyle(active) {
@@ -1028,7 +1038,7 @@ class Component extends DCLogic {
     const nAtivas = pedidosAll.filter((p) => p.status === 'preparo' || p.status === 'pronto').length;
     const nProntos = pedidosAll.filter((p) => p.status === 'pronto').length;
 
-    const mkNav = (key, label) => ({ label, active: tab === key, style: this.navStyle(tab === key), onClick: () => this.setTab(key) });
+    const mkNav = (key, label) => ({ label, icon: this.icons[key], active: tab === key, style: this.navStyle(tab === key), onClick: () => this.setTab(key) });
     const navGarcom = [
       mkNav('pedido', 'Pedido'),
       mkNav('acompanhar', nAtivas ? 'Comandas \u00b7 ' + nAtivas : 'Comandas'),
@@ -1046,7 +1056,7 @@ class Component extends DCLogic {
       { key: 'balcao', label: 'Balc\u00e3o', active: tab === 'balcao' },
       { key: 'mais', label: 'Mais', active: maisActive },
     ].map((n) => ({
-      label: n.label, style: this.mobNavStyle(n.active), dotStyle: this.mobDotStyle(n.active), onClick: () => this.setTab(n.key),
+      label: n.label, icon: this.icons[n.key], style: this.mobNavStyle(n.active), onClick: () => this.setTab(n.key),
     }));
     const maisItems = [
       { label: 'Sa\u00eddas', desc: 'Livro de sa\u00eddas e exporta\u00e7\u00e3o CSV', onClick: () => this.setTab('saidas') },
